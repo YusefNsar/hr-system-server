@@ -1,25 +1,27 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { EmployeeService } from 'src/employee/employee.service';
+import { EmployeeService } from '../employee/employee.service';
 import {
   Employee,
   EmployeeDocument,
   EmployeeGroup,
-} from 'src/employee/schemas/employee.schema';
+} from '../employee/schemas/employee.schema';
 import { JwtService } from '@nestjs/jwt';
 import { Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 export type JWTPayload = { id: Types.ObjectId | string };
-const HASH_SALT = 10;
+export const HASH_SALT = 10;
 
 @Injectable()
 export class AuthService {
   constructor(
     private employeeService: EmployeeService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
-  async signIn(email: string, password: string): Promise<any> {
+  async signIn(email: string, password: string) {
     const employee = await this.employeeService.findOne({ email });
 
     // no employee with that email
@@ -41,7 +43,9 @@ export class AuthService {
 
     const payload: JWTPayload = { id: employee._id };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.signAsync(payload, {
+        secret: this.configService.get('jwt.secret'),
+      }),
       employee,
     };
   }
