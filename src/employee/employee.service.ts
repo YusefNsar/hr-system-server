@@ -43,4 +43,19 @@ export class EmployeeService {
   ): Promise<EmployeeDocument | null> {
     return this.employeeModel.findOne(filter);
   }
+
+  async update(
+    employeeId: string,
+    changes: Partial<Employee>,
+  ): Promise<Employee> {
+    return this.employeeModel.findOneAndUpdate(
+      { _id: employeeId, group: { $ne: EmployeeGroup.HR } }, // filter out non hr employees
+      changes,
+      {
+        lean: true,
+        new: true,
+        projection: { isVerified: false },
+      },
+    );
+  }
 }
