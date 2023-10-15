@@ -3,7 +3,7 @@ import { AttendanceService } from './attendance.service';
 import { AttendanceController } from './attendance.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Attendance, AttendanceSchema } from './schemas/attendance.schema';
-import { EmployeeModule } from 'src/employee/employee.module';
+import { EmployeeModule } from '../employee/employee.module';
 
 @Module({
   imports: [

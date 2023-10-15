@@ -4,8 +4,8 @@ import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 import { FilterQuery, Model } from 'mongoose';
 import { Attendance } from './schemas/attendance.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee } from 'src/employee/schemas/employee.schema';
-import { EmployeeService } from 'src/employee/employee.service';
+import { Employee } from '../employee/schemas/employee.schema';
+import { EmployeeService } from '../employee/employee.service';
 
 @Injectable()
 export class AttendanceService {
@@ -38,15 +38,13 @@ export class AttendanceService {
       );
     }
 
-    const attendance = new this.attendanceModel({
+    return this.attendanceModel.create({
       fromEpochTime,
       toEpochTime,
       dateISO,
       employee,
       hr: reportedBy,
     });
-
-    return attendance.save();
   }
 
   findAll(filters?: FilterQuery<Attendance>) {

@@ -11,7 +11,7 @@ import {
 import { AttendanceService } from './attendance.service';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
-import { JWTPayload } from 'src/auth/auth.service';
+import { JWTPayload } from '../auth/auth.service';
 
 @Controller('attendance')
 export class AttendanceController {
