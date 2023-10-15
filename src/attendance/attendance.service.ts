@@ -24,10 +24,24 @@ export class AttendanceService {
     const dateTo = new Date(toEpochTime);
     this.validateAttendanceInterval(dateFrom, dateTo);
 
+    //* Note: Both fromEpochTime and toEpochTime from same day
+    const dateISO = dateFrom.toISOString();
+
+    const conflictAttendance = await this.attendanceModel.findOne({
+      employee,
+      dateISO,
+    });
+
+    if (!!conflictAttendance) {
+      throw new BadRequestException(
+        'today attendance already exists for this employee',
+      );
+    }
+
     const attendance = new this.attendanceModel({
       fromEpochTime,
       toEpochTime,
-      dateISO: dateFrom.toISOString(), //* Note: Both fromEpochTime and toEpochTime from same day
+      dateISO,
       employee,
       hr: reportedBy,
     });
