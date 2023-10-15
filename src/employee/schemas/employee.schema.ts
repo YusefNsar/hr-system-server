@@ -16,6 +16,8 @@ export enum EmployeeGroup {
 
 @Schema()
 export class Employee {
+  _id: string;
+
   @Prop({ required: true })
   name: string;
 

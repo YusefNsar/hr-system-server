@@ -32,9 +32,15 @@ export class EmployeeService {
     }
   }
 
-  async findAll(): Promise<Employee[]> {
+  async findAll(filters?: FilterQuery<Employee>): Promise<Employee[]> {
     return this.employeeModel
-      .find({ group: { $ne: EmployeeGroup.HR } }, { isVerified: false }) // filter out non hr employees
+      .find(
+        {
+          ...(filters || {}),
+          group: { $ne: EmployeeGroup.HR },
+        },
+        { isVerified: false },
+      ) // filter out non hr employees
       .exec();
   }
 

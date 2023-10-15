@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
-export type JWTPayload = { id: Types.ObjectId };
+export type JWTPayload = { id: Types.ObjectId | string };
 const HASH_SALT = 10;
 
 @Injectable()

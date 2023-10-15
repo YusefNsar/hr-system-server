@@ -33,6 +33,11 @@ export class AttendanceController {
     return this.attendanceService.findAll();
   }
 
+  @Get('analytics')
+  getAnalytics() {
+    return this.attendanceService.getAnalytics();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.attendanceService.findOne(id);
