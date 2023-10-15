@@ -5,7 +5,11 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee, EmployeeDocument } from './schemas/employee.schema';
+import {
+  Employee,
+  EmployeeDocument,
+  EmployeeGroup,
+} from './schemas/employee.schema';
 
 @Injectable()
 export class EmployeeService {
@@ -29,7 +33,9 @@ export class EmployeeService {
   }
 
   async findAll(): Promise<Employee[]> {
-    return this.employeeModel.find().exec();
+    return this.employeeModel
+      .find({ group: { $ne: EmployeeGroup.HR } }, { isVerified: false }) // filter out non hr employees
+      .exec();
   }
 
   async findOne(

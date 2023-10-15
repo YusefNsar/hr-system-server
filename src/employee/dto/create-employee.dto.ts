@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, NotEquals } from 'class-validator';
 import { EmployeeGroup } from '../schemas/employee.schema';
 
 export class CreateEmployeeDto {
@@ -9,5 +9,6 @@ export class CreateEmployeeDto {
   email: string;
 
   @IsEnum(EmployeeGroup)
+  @NotEquals(EmployeeGroup.HR)
   group: EmployeeGroup;
 }
