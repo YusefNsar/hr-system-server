@@ -3,4 +3,7 @@ export default () => ({
   database: {
     host: process.env.DATABASE_HOST,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
 });
