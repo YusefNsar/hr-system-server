@@ -18,10 +18,9 @@ export class EmployeeService {
   ) {}
 
   async create(newEmployee: Partial<Employee>): Promise<EmployeeDocument> {
-    const createdEmployeeDoc = new this.employeeModel(newEmployee);
-
     try {
-      const createdEmployee = await createdEmployeeDoc.save();
+      const createdEmployee = await this.employeeModel.create(newEmployee);
+
       return createdEmployee;
     } catch (err) {
       if ((err.message as string).startsWith('E11000 duplicate key error')) {
